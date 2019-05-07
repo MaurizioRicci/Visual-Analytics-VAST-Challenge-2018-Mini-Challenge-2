@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import SAP from '@/components/SinglePageApp'
+import SPA from '@/components/SinglePageApp'
 
 Vue.use(Router)
 
@@ -9,7 +9,7 @@ export default new Router({
     {
       path: '/',
       name: 'index',
-      component: SAP
+      component: SPA
     }
   ]
 })

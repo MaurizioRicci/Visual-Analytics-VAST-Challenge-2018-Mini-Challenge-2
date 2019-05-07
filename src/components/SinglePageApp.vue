@@ -1,6 +1,6 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
+  <div class='hello'>
+    <h1 v-on:click="onDatasetChanged(1)">{{ msg }}</h1>
   </div>
 </template>
 
@@ -10,19 +10,20 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-	  dataset: []
+      dataset: []
     }
   },
-  mounted() {},
+  mounted () {},
   methods: {
-	onDatasetChanged: function(newData){}
+    onDatasetChanged: function (newData) {
+    }
   },
   watch: {
-	dataset: {
-		handler(newVal) {
-			onDatasetChanged(newVal);
-		}
-	}
+    dataset: {
+      handler (newVal) {
+        this.onDatasetChanged(newVal)
+      }
+    }
   }
 }
 </script>
