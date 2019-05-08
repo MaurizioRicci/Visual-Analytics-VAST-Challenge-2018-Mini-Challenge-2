@@ -1,7 +1,13 @@
 <template>
   <div class='hello'>
     <h1 v-on:click="onDatasetChanged(1)">{{ msg }}</h1>
-    <stationsMap></stationsMap>
+    <b-container fluid>
+      <b-row>
+        <b-col>
+          <stationsMap ref="stationsMap"></stationsMap>
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
