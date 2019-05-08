@@ -1,10 +1,13 @@
 <template>
   <div class='hello'>
     <h1 v-on:click="onDatasetChanged(1)">{{ msg }}</h1>
+    <stationsMap></stationsMap>
   </div>
 </template>
 
 <script>
+import stationsMap from './stationsMap'
+
 export default {
   name: 'SAP',
   data () {
@@ -24,6 +27,9 @@ export default {
         this.onDatasetChanged(newVal)
       }
     }
+  },
+  components: {
+    'stationsMap': stationsMap
   }
 }
 </script>
