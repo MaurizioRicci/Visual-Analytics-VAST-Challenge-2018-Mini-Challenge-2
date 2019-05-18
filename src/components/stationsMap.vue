@@ -5,6 +5,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 const d3 = require('d3');
 
 export default {
