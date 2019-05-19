@@ -3,7 +3,7 @@
     <b-container fluid>
       <b-row>
         <b-col>
-          <stationsMap ref="stationsMap"></stationsMap>
+          <stationsMap ref="stationsMap" @stations-active="stationsActive"></stationsMap>
         </b-col>
       </b-row>
     </b-container>
@@ -33,7 +33,9 @@ export default {
       console.log('Grandi outliers', outliers)
     })
   },
-  methods: {},
+  methods: {
+    stationsActive: (n) => console.log('Stazioni attive', n)
+  },
   watch: {},
   components: {
     'stationsMap': stationsMap
