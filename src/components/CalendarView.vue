@@ -1,6 +1,23 @@
 <template>
   <div class='CalendarView'>
-    <svg ref='svgCalendar'></svg>
+    <b-row align-h="center">
+      <b-col sm="2">
+        <label for="range-1">Filter by st dev > {{ stDevFilter }}</label>
+        <b-form-input id="range-1" v-model="stDevFilter" type="range" min="0" max="5"></b-form-input>
+      </b-col>
+    </b-row>
+      <b-row align-h="center">
+        <b-col sm="8">
+          <svg ref='svgCalendar'></svg>
+        </b-col>
+      </b-row>
+      <b-modal ref="modalInfo" id="bv-modal-info" size="lg" hide-footer>
+        <template slot="modal-title">Day info for {{formatDate(tableData.date)}}</template>
+        <div class='d-block text-center'>
+          <b-table striped hover :items="tableData.items" :fields="tableData.fields">
+          </b-table>
+        </div>
+      </b-modal>
   </div>
 </template>
 
@@ -12,26 +29,57 @@ export default {
   props: {
     width: Number,
     height: Number,
-    data: Array
+    data: Array,
+    stations: Array
+  },
+  data () {
+    return {
+      filteredData: this.data,
+      filteredDataByStations: this.data,
+      stDevFilter: 0,
+      tableData: []
+    }
   },
   mounted () {
+    this.filterByStation()
     this.redraw()
+  },
+  watch: {
+    data: function (newVal, oldVal) { // watch it
+      this.filteredData = newVal
+      this.redraw()
+    },
+    stDevFilter: function (newVal, oldVal) { // watch it
+      this.filteredData = this.filteredDataByStations.filter(d => Math.abs(d.normVal) >= newVal)
+      this.redraw()
+    },
+    stations: function (newVal, oldVal) {
+      this.filterByStation()
+      this.redraw()
+    }
   },
   computed: {
     parseDate: () => d3.timeParse('%d/%m/%Y'),
+    formatDate: () => d3.timeFormat('%Y/%m/%d'),
     transformedData: function () {
-      return d3.nest()//raggruppo per data
+      return d3.nest()// raggruppo per data
         .key(d => d.date)
-        .rollup((d)=> this.rollFunc(d))
-        .entries(this.data)
+        .rollup(d => this.rollFunc(d))
+        .entries(this.filteredData)
         .map(d => {
-        let clone = Object.assign({}, d)
-        clone.date = this.parseDate(clone.date)
-        return clone
-      })
+          let clone = Object.assign({}, d)
+          clone.date = this.parseDate(clone.key)
+          return clone
+        })
     }
   },
   methods: {
+    filterByStation: function () {
+      if (this.stations && this.stations.length > 0) {
+        this.filteredDataByStations = this.data.filter(d => this.stations.includes(d.location))
+        this.filteredData = this.filteredDataByStations
+      }
+    },
     rollFunc: function (d) {
       // raggruppa tutti i valori di un giorno in una unico numero
       return d3.max(d, d => Math.abs(d.normVal))
@@ -82,6 +130,8 @@ export default {
         .style('width', '100%')
         .style('height', 'auto')
 
+      svg.selectAll('g').remove() // non dovrebbe essere cosi
+
       const year = svg
         .selectAll('g')
         .data(years)
@@ -129,6 +179,7 @@ export default {
         .attr('fill', d => color(d.value))
         .attr('stroke', d => (d.value > maxDev ? 'violet' : null))
         .attr('stroke-width', '2')
+        .on('click', d => this.showInfo(d))
         .append('title')
         .text(d => `${formatDate(d.date)}: ${format(d.value)} devSt`)
 
@@ -160,6 +211,18 @@ export default {
         )
         .attr('y', -5)
         .text(formatMonth)
+    },
+    showInfo: function (d) {
+      let tmp = {}
+      tmp.items = this.filteredDataByStations.filter(x => d.key === x.date)
+      tmp.fields = []
+      tmp.fields.push({'key': 'location', 'sortable': true})
+      tmp.fields.push({'key': 'measure', 'sortable': true})
+      tmp.fields.push({'key': 'value', 'sortable': true})
+      tmp.fields.push({'key': 'normVal', 'label': 'Normalized value', 'sortable': true})
+      tmp.date = d.date // contiene la data scelta
+      this.tableData = tmp
+      this.$refs.modalInfo.show()
     }
   }
 }

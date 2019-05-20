@@ -2,11 +2,12 @@
   <div class='hello'>
     <b-container fluid>
       <b-row>
-        <b-col>
+        <b-col cols="12">
           <stationsMap @stations-active="stationsActive"/>
         </b-col>
-        <b-col>
-          <calendarView :data='calendarData(stats)' :width="300" :height='150' v-if="stats.length"/>
+        <b-col cols="12">
+          <calendarView :data='calendarData(stats)' :width="300" :height='150'
+           v-if="stats.length" :stations="activeStations"/>
         </b-col>
       </b-row>
     </b-container>
@@ -25,7 +26,8 @@ export default {
   data () {
     return {
       dataset: [],
-      stats: []
+      stats: [],
+      activeStations: []
     }
   },
   mounted () {
@@ -38,7 +40,10 @@ export default {
     })
   },
   methods: {
-    stationsActive: (n) => console.log('Stazioni attive', n),
+    stationsActive: function(n) {
+      console.log('Stazioni attive', n)
+      this.activeStations = n
+    },
     calendarData: (stats) => filterOutliers(stats, -1)
   },
   watch: {},
