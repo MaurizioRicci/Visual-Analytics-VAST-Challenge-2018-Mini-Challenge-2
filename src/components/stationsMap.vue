@@ -72,8 +72,8 @@ export default {
     redraw: function() {
       // set the dimensions and margins of the diagram
       var margin = { top: 20, right: 0, bottom: 30, left: 0 },
-        width = 500 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
+        width = 400 - margin.left - margin.right,
+        height = 300 - margin.top - margin.bottom;
 
       // declares a tree layout and assigns the size
       var treemap = d3.tree().size([width, height]);
