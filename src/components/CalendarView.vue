@@ -130,11 +130,9 @@ export default {
         .style('width', '100%')
         .style('height', 'auto')
 
-      svg.selectAll('g').remove() // non dovrebbe essere cosi
-
       const year = svg
         .selectAll('g')
-        .data(years)
+        .data(years, d => d.key)
         .join('g')
         .attr(
           'transform',
@@ -142,12 +140,14 @@ export default {
         )
 
       year
-        .append('text')
+        .selectAll('text')
+        .data(d => [d.key])
+        .join('text')
         .attr('x', -5)
         .attr('y', -5)
         .attr('font-weight', 'bold')
         .attr('text-anchor', 'end')
-        .text(d => d.key)
+        .text(d => d)
 
       year
         .append('g')

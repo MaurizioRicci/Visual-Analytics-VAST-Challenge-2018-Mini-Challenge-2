@@ -40,7 +40,7 @@ export default {
     })
   },
   methods: {
-    stationsActive: function(n) {
+    stationsActive: function (n) {
       console.log('Stazioni attive', n)
       this.activeStations = n
     },
