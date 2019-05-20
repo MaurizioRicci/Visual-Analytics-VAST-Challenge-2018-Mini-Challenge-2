@@ -3,7 +3,10 @@
     <b-container fluid>
       <b-row>
         <b-col>
-          <stationsMap ref="stationsMap" @stations-active="stationsActive"></stationsMap>
+          <stationsMap @stations-active="stationsActive"/>
+        </b-col>
+        <b-col>
+          <calendarView :data='calendarData(stats)' :width="300" :height='150' v-if="stats.length"/>
         </b-col>
       </b-row>
     </b-container>
@@ -11,7 +14,8 @@
 </template>
 
 <script>
-import stationsMap from './stationsMap'
+import stationsMap from './StationsMap'
+import calendarView from './CalendarView'
 import dataLoad from '@/assets/js/retriveData'
 import calcStatistics from '@/assets/js/calcStatistics'
 import filterOutliers from '@/assets/js/filterOutliers'
@@ -34,11 +38,13 @@ export default {
     })
   },
   methods: {
-    stationsActive: (n) => console.log('Stazioni attive', n)
+    stationsActive: (n) => console.log('Stazioni attive', n),
+    calendarData: (stats) => filterOutliers(stats, -1)
   },
   watch: {},
   components: {
-    'stationsMap': stationsMap
+    'stationsMap': stationsMap,
+    'calendarView': calendarView
   }
 }
 </script>
