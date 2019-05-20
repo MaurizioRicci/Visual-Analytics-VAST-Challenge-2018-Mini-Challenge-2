@@ -180,6 +180,8 @@ export default {
         .attr('stroke', d => (d.value > maxDev ? 'violet' : null))
         .attr('stroke-width', '2')
         .on('click', d => this.showInfo(d))
+        .on('mouseover', function () { d3.select(this).classed('active', true) })
+        .on('mouseout', function () { d3.select(this).classed('active', false) })
         .append('title')
         .text(d => `${formatDate(d.date)}: ${format(d.value)} devSt`)
 
@@ -227,3 +229,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+svg >>> .active {
+  stroke: rgb(0, 126, 230)
+}
+</style>

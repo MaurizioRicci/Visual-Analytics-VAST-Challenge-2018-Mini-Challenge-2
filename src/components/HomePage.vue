@@ -1,11 +1,11 @@
 <template>
   <div class='hello'>
     <b-container fluid>
-      <b-row>
-        <b-col cols="12">
+      <b-row align-h="center">
+        <b-col sm="auto">
           <stationsMap @stations-active="stationsActive"/>
         </b-col>
-        <b-col cols="12">
+        <b-col cols="9">
           <calendarView :data='calendarData(stats)' :width="300" :height='150'
            v-if="stats.length" :stations="activeStations"/>
         </b-col>
