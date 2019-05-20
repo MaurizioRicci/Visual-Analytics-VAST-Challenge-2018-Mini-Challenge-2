@@ -3,11 +3,11 @@
     <b-row align-h="center">
       <b-col sm="2">
         <label for="range-1">Filter by st dev > {{ stDevFilter }}</label>
-        <b-form-input id="range-1" v-model="stDevFilter" type="range" min="0" max="5"></b-form-input>
+        <b-form-input id="range-1" v-model="stDevFilter" type="range" min="0" max="7"></b-form-input>
       </b-col>
     </b-row>
       <b-row align-h="center">
-        <b-col sm="8">
+        <b-col sm="12">
           <svg ref='svgCalendar'></svg>
         </b-col>
       </b-row>

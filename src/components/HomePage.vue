@@ -2,7 +2,7 @@
   <div class='hello'>
     <b-container fluid>
       <b-row align-h="center">
-        <b-col sm="auto">
+        <b-col cols="3">
           <stationsMap @stations-active="stationsActive"/>
         </b-col>
         <b-col cols="9">
