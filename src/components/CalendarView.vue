@@ -82,7 +82,7 @@ export default {
     },
     rollFunc: function (d) {
       // raggruppa tutti i valori di un giorno in una unico numero
-      return d3.max(d, d => Math.abs(d.normVal))
+      return d3.max(d, d => d.normVal)
     },
     redraw: function () {
       const weekday = 'monday'
@@ -100,9 +100,10 @@ export default {
           : (d.getUTCDay() + 6) % 7
       const color = d3
         .scaleSequential(
-          d3.interpolateRgb('rgba(63, 195, 128, 1)', 'rgba(240, 52, 52, 1)')
+          d3.interpolateBrBG
+          //d3.interpolateRgb('rgba(63, 195, 128, 1)', 'rgba(240, 52, 52, 1)')
         )
-        .domain([0, maxDev])
+        .domain([-maxDev, maxDev])
       const pathMonth = t => {
         const n = weekday === 'weekday' ? 5 : 7
         const d = Math.max(0, Math.min(n, countDay(t)))
@@ -177,7 +178,7 @@ export default {
         )
         .attr('y', d => countDay(d.date) * cellSize + 0.5)
         .attr('fill', d => color(d.value))
-        .attr('stroke', d => (d.value > maxDev ? 'violet' : null))
+        .attr('stroke', d => (d.value > maxDev ? 'violet' : 'black'))
         .attr('stroke-width', '2')
         .on('click', d => this.showInfo(d))
         .on('mouseover', function () { d3.select(this).classed('active', true) })
@@ -201,8 +202,8 @@ export default {
         .filter((d, i) => i)
         .append('path')
         .attr('fill', 'none')
-        .attr('stroke', '#fff')
-        .attr('stroke-width', 3)
+        //.attr('stroke', '#fff')
+        //.attr('stroke-width', 3)
         .attr('d', pathMonth)
 
       month
