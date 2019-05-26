@@ -1,0 +1,26 @@
+.container{
+  background-color: whitesmoke;
+}
+/*style title*/
+h1{
+  color:cornflowerblue;
+}
+.navbar-nav{
+  background-color: beige;
+  flex-direction: row;
+  margin-left: 30%;
+  position: absolute;
+}
+a.nav-link {
+  padding:12px;
+  display: inline-block;
+  margin: 10px;
+}
+/*style container*/
+.row{
+  margin-top: 3%;
+}
+
+
+
+

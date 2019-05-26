@@ -11,6 +11,7 @@ export default {
 </script>
 
 <style>
+  @import './stylesheet.css';
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -20,3 +21,4 @@ export default {
   margin-top: 60px;
 }
 </style>
+<h5>Pressed and un-pressed state</h5>
