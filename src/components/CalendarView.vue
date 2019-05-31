@@ -82,7 +82,12 @@ export default {
     },
     rollFunc: function (d) {
       // raggruppa tutti i valori di un giorno in una unico numero
-      return d3.max(d, d => d.normVal)
+      // prende il minimo e massimo e confranta in valore assoluto
+      // es: max(-10, 4) = -10
+      let min = d3.min(d, d => (d.normVal))
+      let max = d3.max(d, d => (d.normVal))
+      if (Math.abs(min) <= Math.abs(max)) return max
+      else return min
     },
     redraw: function () {
       const weekday = 'monday'
@@ -101,7 +106,7 @@ export default {
       const color = d3
         .scaleSequential(
           d3.interpolateBrBG
-          //d3.interpolateRgb('rgba(63, 195, 128, 1)', 'rgba(240, 52, 52, 1)')
+          // d3.interpolateRgb('rgba(63, 195, 128, 1)', 'rgba(240, 52, 52, 1)')
         )
         .domain([-maxDev, maxDev])
       const pathMonth = t => {
@@ -202,8 +207,8 @@ export default {
         .filter((d, i) => i)
         .append('path')
         .attr('fill', 'none')
-        //.attr('stroke', '#fff')
-        //.attr('stroke-width', 3)
+        // .attr('stroke', '#fff')
+        // .attr('stroke-width', 3)
         .attr('d', pathMonth)
 
       month
