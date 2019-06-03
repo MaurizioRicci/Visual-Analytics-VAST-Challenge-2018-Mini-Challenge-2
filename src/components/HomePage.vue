@@ -24,7 +24,7 @@
 
     <div class="row justify-content-center">
       <div class="col-md-10">
-        <b-img src="https://www.studiarapido.it/wp-content/uploads/2017/09/inquinamento-dellacqua.jpg" fluid alt="Responsive image"></b-img>
+        <img src="~@/assets/inquinamento_acqua.jpg" fluid alt="Responsive image">
       </div>
     </div>
 
@@ -32,7 +32,7 @@
         <div class="col-md-6 text-justify">
           <h2>L'evento</h2>
           <p>
-            L'anno scorso, la Kasios Furniture Company è stata coinvolta in danni ambientali alla Riserva della fauna selvatica di Boonsong Lekagul sia per lo scarico di rifiuti tossici che per inquinare l'aria con prodotti chimici dal suo processo di produzione.
+            L'anno scorso, Kasios Furniture Company è stata coinvolta in danni ambientali alla Riserva della fauna selvatica di Boonsong Lekagul sia per lo scarico di rifiuti tossici che per inquinare l'aria con prodotti chimici dal suo processo di produzione.
             Ma Kasios non sta prendendo queste accuse a terra e negano ogni accusa di dumping dei rifiuti industriali! I portavoce di Kasios affermano che non vi è alcuna contaminazione del terreno vicino alla stazione remota dei ranger suggerita dai partecipanti
             alla mini-sfida 1 e 3 dello scorso anno,
             e hanno ispezionato quell'area e l'hanno trovata incontaminata come il resto della riserva.
