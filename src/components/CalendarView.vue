@@ -82,7 +82,7 @@ export default {
     },
     rollFunc: function (d) {
       // raggruppa tutti i valori di un giorno in una unico numero
-      // prende il minimo e massimo e confranta in valore assoluto
+      // prende il minimo e massimo e confronta in valore assoluto
       // es: max(-10, 4) = -10
       let min = d3.min(d, d => (d.normVal))
       let max = d3.max(d, d => (d.normVal))

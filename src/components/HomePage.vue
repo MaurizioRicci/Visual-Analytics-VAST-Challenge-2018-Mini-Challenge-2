@@ -7,7 +7,7 @@
     <ul class="nav nav-tabs">
         <li class="nav-item">
           <li><a class="nav-link" href="#">Home</a></li>
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Grafici</a>
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Grafici</a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="#">Calendario misurazioni</a>
             <a class="dropdown-item" href="#">Separated link</a>
@@ -22,12 +22,14 @@
     </ul>
     </div>
 
-    <div>
-      <b-img src="https://www.studiarapido.it/wp-content/uploads/2017/09/inquinamento-dellacqua.jpg" fluid alt="Responsive image"></b-img>
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <b-img src="https://www.studiarapido.it/wp-content/uploads/2017/09/inquinamento-dellacqua.jpg" fluid alt="Responsive image"></b-img>
+      </div>
     </div>
 
-      <div class="row">
-        <div class="col-md-8">
+      <div class="row justify-content-center no-gutters">
+        <div class="col-md-6 text-justify">
           <h2>L'evento</h2>
           <p>
             L'anno scorso, la Kasios Furniture Company è stata coinvolta in danni ambientali alla Riserva della fauna selvatica di Boonsong Lekagul sia per lo scarico di rifiuti tossici che per inquinare l'aria con prodotti chimici dal suo processo di produzione.
