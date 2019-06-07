@@ -5,10 +5,11 @@
   "author": "Maurizio <maurizioricci95@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "node ./APIServer/apiServer.js | webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
-    "build": "node build/build.js"
+    "build": "node ./APIServer/apiServer.js | node build/build.js",
+	"docs": "apidoc -i ./APIServer -o ./APIServer/apidoc/"
   },
   "dependencies": {
     "bootstrap-vue": "^2.0.0-rc.19",

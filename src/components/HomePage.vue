@@ -52,8 +52,8 @@
       </div>
 
     <div class="container-fluid">
-          <calendarView :data='calendarData(stats)' :width="300" :height='150'
-           v-if="stats.length" :stations="activeStations"/>
+          <calendarView :width="300" :height='150'
+           :stations="activeStations"/>
     </div>
   </div>
 </template>
@@ -61,34 +61,21 @@
 <script>
 import stationsMap from './StationsMap'
 import calendarView from './CalendarView'
-import dataLoad from '@/assets/js/retriveData'
-import calcStatistics from '@/assets/js/calcStatistics'
-import filterOutliers from '@/assets/js/filterOutliers'
 
 export default {
   name: 'HomePage',
   data () {
     return {
-      dataset: [],
       stats: [],
       activeStations: []
     }
   },
-  mounted () {
-    dataLoad().then(data => {
-      this.dataset = data
-      console.log(this.dataset)
-      this.stats = calcStatistics(data)
-      let outliers = filterOutliers(this.stats, 7)
-      console.log('Grandi outliers', outliers)
-    })
-  },
+  mounted () {},
   methods: {
     stationsActive: function (n) {
       console.log('Stazioni attive', n)
       this.activeStations = n
-    },
-    calendarData: (stats) => filterOutliers(stats, -1)
+    }
   },
   watch: {},
   components: {

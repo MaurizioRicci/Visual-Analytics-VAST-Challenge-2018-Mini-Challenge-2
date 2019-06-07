@@ -45,6 +45,7 @@ export default {
     };
   },
   mounted() {
+    this.$emit('stations-active', Array.from(this.activeStations))
     this.redraw();
   },
   methods: {

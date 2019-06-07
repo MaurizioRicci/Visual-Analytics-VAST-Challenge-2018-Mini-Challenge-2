@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import getStatistics from '@/assets/js/getStatistics'
+import getCalendarStats from '@/assets/js/getCalendarStats'
 const d3 = require('d3')
 
 export default {
@@ -29,65 +31,41 @@ export default {
   props: {
     width: Number,
     height: Number,
-    data: Array,
     stations: Array
   },
   data () {
     return {
-      filteredData: this.data,
-      filteredDataByStations: this.data,
+      formatDate: d3.timeFormat('%Y-%m-%d'),
       stDevFilter: 0,
-      tableData: []
+      tableData: [],
+      transformedData: null
     }
   },
-  mounted () {
-    this.filterByStation()
-    this.redraw()
-  },
+  mounted () {},
   watch: {
-    data: function (newVal, oldVal) { // watch it
-      this.filteredData = newVal
-      this.redraw()
-    },
     stDevFilter: function (newVal, oldVal) { // watch it
-      this.filteredData = this.filteredDataByStations.filter(d => Math.abs(d.normVal) >= newVal)
-      this.redraw()
+      this.fetchRedraw(newVal, this.stations)
     },
     stations: function (newVal, oldVal) {
-      this.filterByStation()
-      this.redraw()
-    }
-  },
-  computed: {
-    parseDate: () => d3.timeParse('%d/%m/%Y'),
-    formatDate: () => d3.timeFormat('%Y/%m/%d'),
-    transformedData: function () {
-      return d3.nest()// raggruppo per data
-        .key(d => d.date)
-        .rollup(d => this.rollFunc(d))
-        .entries(this.filteredData)
-        .map(d => {
-          let clone = Object.assign({}, d)
-          clone.date = this.parseDate(clone.key)
-          return clone
-        })
+      this.fetchRedraw(this.stDevFilter, newVal)
     }
   },
   methods: {
-    filterByStation: function () {
-      if (this.stations && this.stations.length > 0) {
-        this.filteredDataByStations = this.data.filter(d => this.stations.includes(d.location))
-        this.filteredData = this.filteredDataByStations
-      }
+    formatData: (data) => {
+      let parseDate = d3.timeParse('%Y-%m-%d')
+      return data.map(d => {
+        d.date = parseDate(d.date)
+        return d
+      })
     },
-    rollFunc: function (d) {
-      // raggruppa tutti i valori di un giorno in una unico numero
-      // prende il minimo e massimo e confronta in valore assoluto
-      // es: max(-10, 4) = -10
-      let min = d3.min(d, d => (d.normVal))
-      let max = d3.max(d, d => (d.normVal))
-      if (Math.abs(min) <= Math.abs(max)) return max
-      else return min
+    fetchRedraw: function (minStdDev, stations) {
+      getCalendarStats({
+        'minStdDev': minStdDev,
+        'stations': stations
+      }).then(d => {
+        this.transformedData = this.formatData(d)
+        this.redraw()
+      })
     },
     redraw: function () {
       const weekday = 'monday'
@@ -182,14 +160,14 @@ export default {
           d => timeWeek.count(d3.utcYear(d.date), d.date) * cellSize + 0.5
         )
         .attr('y', d => countDay(d.date) * cellSize + 0.5)
-        .attr('fill', d => color(d.value))
-        .attr('stroke', d => (d.value > maxDev ? 'violet' : 'black'))
+        .attr('fill', d => color(d.standard_val))
+        .attr('stroke', d => (d.standard_val > maxDev ? 'violet' : 'black'))
         .attr('stroke-width', '2')
         .on('click', d => this.showInfo(d))
         .on('mouseover', function () { d3.select(this).classed('active', true) })
         .on('mouseout', function () { d3.select(this).classed('active', false) })
         .append('title')
-        .text(d => `${formatDate(d.date)}: ${format(d.value)} devSt`)
+        .text(d => `${formatDate(d.date)}: ${format(d.standard_val)} devSt`)
 
       const month = year
         .append('g')
@@ -221,16 +199,21 @@ export default {
         .text(formatMonth)
     },
     showInfo: function (d) {
-      let tmp = {}
-      tmp.items = this.filteredDataByStations.filter(x => d.key === x.date)
-      tmp.fields = []
-      tmp.fields.push({'key': 'location', 'sortable': true})
-      tmp.fields.push({'key': 'measure', 'sortable': true})
-      tmp.fields.push({'key': 'value', 'sortable': true})
-      tmp.fields.push({'key': 'normVal', 'label': 'Normalized value', 'sortable': true})
-      tmp.date = d.date // contiene la data scelta
-      this.tableData = tmp
-      this.$refs.modalInfo.show()
+      getStatistics({
+        'date': this.formatDate(d.date)
+      }).then(data => {
+        let tmp = {}
+        tmp.items = data
+        tmp.fields = []
+        tmp.fields.push({'key': 'location', 'sortable': true})
+        tmp.fields.push({'key': 'measure', 'sortable': true})
+        tmp.fields.push({'key': 'value', 'sortable': true})
+        tmp.fields.push({'key': 'unit', 'sortable': true})
+        tmp.fields.push({'key': 'standard_val', 'label': 'Normalized value', 'sortable': true})
+        tmp.date = d.date // contiene la data scelta
+        this.tableData = tmp
+        this.$refs.modalInfo.show()
+      })
     }
   }
 }
