@@ -9,9 +9,10 @@
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
     "build": "node ./APIServer/apiServer.js | node build/build.js",
-	"docs": "apidoc -i ./APIServer -o ./APIServer/apidoc/"
+    "docs": "apidoc -i ./APIServer -o ./APIServer/apidoc/"
   },
   "dependencies": {
+    "apidoc": "^0.17.7",
     "bootstrap-vue": "^2.0.0-rc.19",
     "cors": "^2.8.5",
     "d3": "^5.9.2",
