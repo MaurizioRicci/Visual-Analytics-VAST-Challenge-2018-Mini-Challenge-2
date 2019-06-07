@@ -46,6 +46,7 @@ api.get('/measures', (req, res) => {
   if (limit) query += ` LIMIT ${limit}`
 
   db.all(query, (err, rows) => {
+    if (err) console.log(err)
     res.json(rows)
   })
 })
@@ -93,6 +94,7 @@ api.get('/measuresGrouped', (req, res) => {
   WHERE abs(standard_val) > ${minStdDev} 
   AND location IN (${quotedAndCommaSeparated})
   GROUP BY date`, (err, rows) => {
+    if (err) console.log(err)
     res.json(rows)
   })
 })
