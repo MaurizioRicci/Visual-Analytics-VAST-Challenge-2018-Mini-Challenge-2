@@ -41,8 +41,15 @@ api.get('/measures', (req, res) => {
 
   let limit = req.query.limit
 
+  let orderBy = req.query.order_by
+  orderBy = orderBy ? JSON.parse(orderBy) : null
+  let order = req.query.order
+  order = order ? JSON.parse(order) : null
+
   let query = `SELECT * FROM waterways_readings_std_val`
   if (date) query += ` WHERE date = '${date}'`
+  if (orderBy) query += ` ORDER BY ${orderBy}`
+  if (order) query += ` ${order}`
   if (limit) query += ` LIMIT ${limit}`
 
   db.all(query, (err, rows) => {
