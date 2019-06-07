@@ -83,17 +83,21 @@ api.get('/measuresGrouped', (req, res) => {
     ? Number(JSON.parse(minStdDev)) : Number.MIN_VALUE
 
   let { stations } = req.query
-  var quotedAndCommaSeparated = "'" + JSON.parse(stations).join("','") + "'"
 
-  db.all(`SELECT location, measure, date, value, unit, 
+  let query = `SELECT location, measure, date, value, unit, avg_sample, 
   CASE WHEN abs(min(standard_val)) <= abs(max(standard_val))
   THEN max(standard_val)
   ELSE min(standard_val)
   END as standard_val
   FROM waterways_readings_std_val
-  WHERE abs(standard_val) > ${minStdDev} 
-  AND location IN (${quotedAndCommaSeparated})
-  GROUP BY date`, (err, rows) => {
+  WHERE abs(standard_val) > ${minStdDev}`
+  if (stations) {
+    var quotedAndCommaSeparated = "'" + JSON.parse(stations).join("','") + "'"
+    query += ` AND location IN (${quotedAndCommaSeparated})`
+  }
+  query += ` GROUP BY date`
+
+  db.all(query, (err, rows) => {
     if (err) console.log(err)
     res.json(rows)
   })

@@ -13,10 +13,14 @@
       </b-row>
       <b-modal ref="modalInfo" id="bv-modal-info" size="lg" hide-footer>
         <template slot="modal-title">Day info for {{formatDate(tableData.date)}}</template>
-        <div class='d-block text-center'>
-          <b-table striped hover :items="tableData.items" :fields="tableData.fields">
-          </b-table>
-        </div>
+        <b-container fluid>
+          <b-row>
+            <b-col>
+              <b-table striped hover :items="tableData.items" :fields="tableData.fields">
+              </b-table>
+            </b-col>
+          </b-row>
+        </b-container>
       </b-modal>
   </div>
 </template>
@@ -41,7 +45,9 @@ export default {
       transformedData: null
     }
   },
-  mounted () {},
+  mounted () {
+    this.fetchRedraw()
+  },
   watch: {
     stDevFilter: function (newVal, oldVal) { // watch it
       this.fetchRedraw(newVal, this.stations)
@@ -209,6 +215,7 @@ export default {
         tmp.fields.push({'key': 'measure', 'sortable': true})
         tmp.fields.push({'key': 'value', 'sortable': true})
         tmp.fields.push({'key': 'unit', 'sortable': true})
+        tmp.fields.push({'key': 'avg_sample', 'label': 'average value', 'sortable': false})
         tmp.fields.push({'key': 'standard_val', 'label': 'Normalized value', 'sortable': true})
         tmp.date = d.date // contiene la data scelta
         this.tableData = tmp
