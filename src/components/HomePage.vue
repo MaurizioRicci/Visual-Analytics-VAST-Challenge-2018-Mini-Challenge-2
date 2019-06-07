@@ -19,8 +19,10 @@
           <b-dropdown-item href>Separated link</b-dropdown-item>
           <b-dropdown-item href>Sunburst chart</b-dropdown-item>
           <b-dropdown-item href>Horizon chart</b-dropdown-item>
-          <b-dropdown-item href="#/outliers_table">Outliers table</b-dropdown-item>
         </b-nav-item-dropdown>
+        <li>
+          <a class="nav-link" href="#/outliers_table">Outliers table</a>
+        </li>
         <li>
           <a class="nav-link" href="#">Calendario dei rilevamenti</a>
         </li>
