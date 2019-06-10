@@ -110,6 +110,47 @@ api.get('/measuresGrouped', (req, res) => {
   })
 })
 
+/**
+ * @api {get} / Request list of measurement dates, grouped by location, year
+ * and weeknumber. For each row it returns, week per week the date extent of measures.
+ * This API is used only to summarize/reduce the measure list
+ * @apiName GetMeasureDateExtent
+ * @apiGroup Measure
+ *
+ * @apiSuccess {Object[]} measure List of objects.
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     [
+ *       {
+ *        "location": Boonsri
+ *        "minDate": 1998-01-1,
+ *        "maxDate": 1998-01-6
+ *      },
+ *      {
+ *        "location": Boonsri
+ *        "minDate": 1998-01-8,
+ *        "maxDate": 1998-01-15
+ *      }
+ *     ]
+ *
+ * @apiError
+ *
+ * @apiSampleRequest http://localhost:3000/measuresGrouped2
+ *
+ *  @apiErrorExample {json} List error
+ *    HTTP/1.1 500 Internal Server Error
+ *
+ */
+api.get('/measuresGrouped2', (req, res) => {
+  db.all(`SELECT location, min(date) as fromDate, max(date) as toDate
+  FROM waterways_readings_std_val
+  GROUP BY location, strftime('%W',date), strftime('%Y',date)
+  ORDER BY date`, (err, rows) => {
+    if (err) console.log(err)
+    res.json(rows)
+  })
+})
+
 // start listening
 
 const port = 3000
