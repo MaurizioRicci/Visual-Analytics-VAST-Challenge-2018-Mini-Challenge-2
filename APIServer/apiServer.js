@@ -11,7 +11,9 @@ const api = express()
 api.use(cors())
 
 /**
- * @api {get} / Request list of all data with a standardized value optionally filtered by a given date
+ * @api {get} / GetMeasures
+ * @apiDescription Request list of all data with a standardized value optionally
+ *  filtered by a given date
  * @apiName GetMeasuresData
  * @apiGroup Measure
  *
@@ -27,7 +29,7 @@ api.use(cors())
  *      }
  *     ]
  *
- * @apiError Invalid date.
+ * @apiError InvalidDate
  *
  * @apiSampleRequest http://localhost:3000/measures?limit=20
  *
@@ -59,8 +61,8 @@ api.get('/measures', (req, res) => {
 })
 
 /**
- * @api {get} / Request list of all data with a standardized value, grouped by day
- *  and filtered by a stations list and standardDeviation min value
+ * @api {get} / measuresGrouped
+ * @apiDescription Request list of all data with a standardized value, grouped by day and filtered by a stations list and standardDeviation min value
  * @apiName GetCalendarData
  * @apiGroup Measure
  *
@@ -75,8 +77,7 @@ api.get('/measures', (req, res) => {
  *      }
  *     ]
  *
- * @apiError Invalid stations list.
- * @apiError Invalid number passed.
+ * @apiError InvalidStationsList
  *
  * @apiSampleRequest http://localhost:3000/measuresGrouped?stations=["Chai"]
  *
@@ -111,9 +112,8 @@ api.get('/measuresGrouped', (req, res) => {
 })
 
 /**
- * @api {get} / Request list of measurement dates, grouped by location, year
- * and weeknumber. For each row it returns, week per week the date extent of measures.
- * This API is used only to summarize/reduce the measure list
+ * @api {get} / measuresGrouped2
+ * @apiDescription Request list of measurement dates, grouped by location, year and weeknumber. For each row it returns, week per week the date extent of measures. This API is used only to summarize/reduce the measure list.
  * @apiName GetMeasureDateExtent
  * @apiGroup Measure
  *
@@ -133,7 +133,7 @@ api.get('/measuresGrouped', (req, res) => {
  *      }
  *     ]
  *
- * @apiError
+ * @apiError None.
  *
  * @apiSampleRequest http://localhost:3000/measuresGrouped2
  *
