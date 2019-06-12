@@ -11,7 +11,7 @@ const api = express()
 api.use(cors())
 
 /**
- * @api {get} / GetMeasures
+ * @api {get} /measures?[limit=<Number>]&[date=<Date>]&[order_by=<String>]&[order=<ASC|DESC>] GetMeasures
  * @apiDescription Request list of all data with a standardized value optionally
  *  filtered by a given date
  * @apiName GetMeasuresData
@@ -61,7 +61,7 @@ api.get('/measures', (req, res) => {
 })
 
 /**
- * @api {get} / measuresGrouped
+ * @api {get} / measuresGrouped?[stations=<Array>]&[minStdDev=<Number>]
  * @apiDescription Request list of all data with a standardized value, grouped by day and filtered by a stations list and standardDeviation min value
  * @apiName GetCalendarData
  * @apiGroup Measure
