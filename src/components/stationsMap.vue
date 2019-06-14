@@ -1,49 +1,48 @@
 <template>
-  <div class="stationsMap">
-    <svg ref="svgTree"></svg>
-    <infoBtn :content="infoData.content"/>
+  <div class='stationsMap'>
+    <svg ref='svgTree'></svg>
+    <infoBtn :content='infoData.content'/>
   </div>
 </template>
 
 <script>
-/* eslint-disable */
-const d3 = require("d3");
 import infoBtn from './InfoBtn'
+const d3 = require('d3')
 
 export default {
-  name: "StationsMap",
+  name: 'StationsMap',
   components: {
     infoBtn: infoBtn
   },
   props: {},
-  data() {
+  data () {
     return {
       activeStations: new Set([
-        "Waterways", "Kannika",
-        "Boonsri", "Kohsoom",
-        "Busarakan", "Somchair",
-        "Achara", "Tansanee",
-        "Chai", "Decha", "Sakda"
+        'Waterways', 'Kannika',
+        'Boonsri', 'Kohsoom',
+        'Busarakan', 'Somchair',
+        'Achara', 'Tansanee',
+        'Chai', 'Decha', 'Sakda'
       ]),
       treeData: {
-        name: "Waterways",
+        name: 'Waterways',
         children: [
           {
-            name: "Kannika",
+            name: 'Kannika',
             children: [
               {
-                name: "Chai",
-                children: [{ name: "Boonsri" }, { name: "Kohsoom" }]
+                name: 'Chai',
+                children: [{ name: 'Boonsri' }, { name: 'Kohsoom' }]
               },
-              { name: "Busarakan" }
+              { name: 'Busarakan' }
             ]
           },
           {
-            name: "Sakda",
-            children: [{ name: "Somchair" }, { name: "Achara" }]
+            name: 'Sakda',
+            children: [{ name: 'Somchair' }, { name: 'Achara' }]
           },
-          { name: "Tansanee" },
-          { name: "Decha" }
+          { name: 'Tansanee' },
+          { name: 'Decha' }
         ]
       },
       infoData: {
@@ -53,127 +52,129 @@ export default {
         'This is an interactive map, click on stations to enable/disable it,' +
         ' it will alter the calendar visualization.'
       }
-    };
+    }
   },
-  mounted() {
+  mounted () {
     this.$emit('stations-active', Array.from(this.activeStations))
-    this.redraw();
+    this.redraw()
   },
   methods: {
-    isStationActive: function(station) {
-      return this.activeStations.has(station);
+    isStationActive: function (station) {
+      return this.activeStations.has(station)
     },
-    addActiveStation: function(station) {
+    addActiveStation: function (station) {
       // metto attiva la stazione, ridisegno e notifico tutte le stazioni attive
-      this.activeStations.add(station);
+      this.activeStations.add(station)
       this.makeToast('Added ' + station + ' station')
-      this.redraw();
+      this.redraw()
       this.$emit('stations-active', Array.from(this.activeStations))
     },
-    removeActiveStation: function(station) {
-      this.activeStations.delete(station);
+    removeActiveStation: function (station) {
+      this.activeStations.delete(station)
       this.makeToast('Removed ' + station + ' station')
-      this.redraw();
+      this.redraw()
       this.$emit('stations-active', Array.from(this.activeStations))
     },
-    toggleStation: function(station) {
-      if (this.isStationActive(station)) 
-        this.removeActiveStation(station);
-      else 
-        this.addActiveStation(station);
-      this.redraw();
+    toggleStation: function (station) {
+      if (this.isStationActive(station)) {
+        this.removeActiveStation(station)
+      } else {
+        this.addActiveStation(station)
+      }
+      this.redraw()
     },
-    redraw: function() {
+    redraw: function () {
       // set the dimensions and margins of the diagram
-      var margin = { top: 20, right: 0, bottom: 30, left: 0 },
-        width = 380 - margin.left - margin.right,
-        height = 300 - margin.top - margin.bottom;
+      var margin = { top: 20, right: 0, bottom: 30, left: 0 }
+      var width = 380 - margin.left - margin.right
+      var height = 300 - margin.top - margin.bottom
 
       // declares a tree layout and assigns the size
-      var treemap = d3.tree().size([width, height]);
+      var treemap = d3.tree().size([width, height])
 
       //  assigns the data to a hierarchy using parent-child relationships
-      var nodes = d3.hierarchy(this.treeData);
+      var nodes = d3.hierarchy(this.treeData)
 
       // maps the node data to the tree layout
-      nodes = treemap(nodes);
-      nodes.y = height;
+      nodes = treemap(nodes)
+      nodes.y = height
       // append the svg obgect to the body of the page
       // appends a 'group' element to 'svg'
       // moves the 'group' element to the top left margin
       this.svg = d3
         .select(this.$refs.svgTree)
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom);
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
       var g = this.svg
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-      this.svg = this.svg.node();
+        .append('g')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+      this.svg = this.svg.node()
 
       // adds the links between the nodes
-      var link = g
-        .selectAll(".link")
+      // var link = g
+      g
+        .selectAll('.link')
         .data(nodes.descendants().slice(1))
         .enter()
-        .append("path")
-        .attr("class", "link")
-        .attr("d", function(d) {
-          d.y = height - d.y;
+        .append('path')
+        .attr('class', 'link')
+        .attr('d', function (d) {
+          d.y = height - d.y
           return (
-            "M" +
+            'M' +
             d.x +
-            "," +
+            ',' +
             d.y +
-            "C" +
+            'C' +
             d.x +
-            "," +
+            ',' +
             (d.y + d.parent.y) / 2 +
-            " " +
+            ' ' +
             d.parent.x +
-            "," +
+            ',' +
             (d.y + d.parent.y) / 2 +
-            " " +
+            ' ' +
             d.parent.x +
-            "," +
+            ',' +
             d.parent.y
-          );
-        });
+          )
+        })
 
       // adds each node as a group
       var node = g
-        .selectAll(".node")
+        .selectAll('.node')
         .data(nodes.descendants())
         .enter()
-        .append("g")
+        .append('g')
         .attr(
-          "class",
+          'class',
           d =>
-            "node" +
-            (d.parent ? "" : " node--root") +
-            (d.children ? " node--internal" : " node--leaf") +
+            'node' +
+            (d.parent ? '' : ' node--root') +
+            (d.children ? ' node--internal' : ' node--leaf') +
             (this.isStationActive(d.data.name)
-              ? " node--active"
-              : " node--inactive")
+              ? ' node--active'
+              : ' node--inactive')
         )
-        .attr("transform", function(d) {
-          return "translate(" + d.x + "," + d.y + ")";
+        .attr('transform', function (d) {
+          return 'translate(' + d.x + ',' + d.y + ')'
         })
-        .on("click", d => this.toggleStation(d.data.name));
+        .on('click', d => this.toggleStation(d.data.name))
 
       // adds the circle to the node
-      node.append("circle").attr("r", 10);
+      node.append('circle').attr('r', 10)
 
       // adds the text to the node
       node
-        .append("text")
-        .attr("dy", ".35em")
-        .attr("y", 20)
-        .style("text-anchor", "middle")
-        .text(function(d) {
-          return d.data.name;
-        });
+        .append('text')
+        .attr('dy', '.35em')
+        .attr('y', 20)
+        .style('text-anchor', 'middle')
+        .text(function (d) {
+          return d.data.name
+        })
     },
-    makeToast(txt, append = false) {
+    makeToast (txt, append = false) {
       this.$bvToast.toast(`${txt}`, {
         title: 'Stations map',
         autoHideDelay: 5000,
@@ -181,7 +182,7 @@ export default {
       })
     }
   }
-};
+}
 </script>
 
 <!-- Add 'scoped' attribute to limit CSS to this component only -->
