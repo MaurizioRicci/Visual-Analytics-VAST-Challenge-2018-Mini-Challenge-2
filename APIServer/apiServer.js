@@ -11,9 +11,9 @@ const api = express()
 api.use(cors())
 
 /**
- * @api {get} /measures?[limit=<Number>]&[date=<Date>]&[order_by=<String>]&[order=<ASC|DESC>] GetMeasures
+ * @api {get} /measures?[limit=<Number>]&[date=<Date>]&[order_by=<String>]&[order=<ASC|DESC>]&[stations=<Array>] GetMeasures
  * @apiDescription Request list of all data with a standardized value optionally
- *  filtered by a given date
+ *  filtered by a given date or by stations
  * @apiName GetMeasuresData
  * @apiGroup Measure
  *
@@ -48,8 +48,14 @@ api.get('/measures', (req, res) => {
   let order = req.query.order
   order = order ? JSON.parse(order) : null
 
+  let stations = req.query.stations
+
   let query = `SELECT * FROM waterways_readings_std_val`
   if (date) query += ` WHERE date = '${date}'`
+  if (stations) {
+    var quotedAndCommaSeparated = "'" + JSON.parse(stations).join("','") + "'"
+    query += ` AND location IN (${quotedAndCommaSeparated})`
+  }
   if (orderBy) query += ` ORDER BY ${orderBy}`
   if (order) query += ` ${order}`
   if (limit) query += ` LIMIT ${limit}`

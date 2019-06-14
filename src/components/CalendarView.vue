@@ -224,7 +224,8 @@ export default {
     },
     showInfo: function (d) {
       getStatistics({
-        'date': this.formatDate(d.date)
+        'date': this.formatDate(d.date),
+        'stations': this.stations
       }).then(data => {
         let tmp = {}
         tmp.items = data
