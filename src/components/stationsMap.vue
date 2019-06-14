@@ -1,15 +1,20 @@
 <template>
   <div class="stationsMap">
     <svg ref="svgTree"></svg>
+    <infoBtn :content="infoData.content"/>
   </div>
 </template>
 
 <script>
 /* eslint-disable */
 const d3 = require("d3");
+import infoBtn from './InfoBtn'
 
 export default {
   name: "StationsMap",
+  components: {
+    infoBtn: infoBtn
+  },
   props: {},
   data() {
     return {
@@ -41,7 +46,13 @@ export default {
           { name: "Decha" }
         ]
       },
-      svg: undefined
+      infoData: {
+        title: '',
+        content: 'This is a tree representing stations water flow.' +
+        ' For example Boonsri and Kohsoom waters flow into Chai. <br>' +
+        'This is an interactive map, click on stations to enable/disable it,' +
+        ' it will alter the calendar visualization.'
+      }
     };
   },
   mounted() {
@@ -55,11 +66,13 @@ export default {
     addActiveStation: function(station) {
       // metto attiva la stazione, ridisegno e notifico tutte le stazioni attive
       this.activeStations.add(station);
+      this.makeToast('Added ' + station + ' station')
       this.redraw();
       this.$emit('stations-active', Array.from(this.activeStations))
     },
     removeActiveStation: function(station) {
       this.activeStations.delete(station);
+      this.makeToast('Removed ' + station + ' station')
       this.redraw();
       this.$emit('stations-active', Array.from(this.activeStations))
     },
@@ -159,6 +172,13 @@ export default {
         .text(function(d) {
           return d.data.name;
         });
+    },
+    makeToast(txt, append = false) {
+      this.$bvToast.toast(`${txt}`, {
+        title: 'Stations map',
+        autoHideDelay: 5000,
+        appendToast: append
+      })
     }
   }
 };

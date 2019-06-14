@@ -1,7 +1,10 @@
 <template>
   <div class='CalendarView'>
-    <b-row align-h="center">
+    <b-row>
       <b-col sm="2">
+        <infoBtn :content="infoData.content"/>
+      </b-col>
+      <b-col sm="2" offset-sm="3">
         <label for="range-1">Filter by st dev > {{ stDevFilter }}</label>
         <b-form-input id="range-1" v-model="stDevFilter" type="range" min="0" max="7"></b-form-input>
       </b-col>
@@ -28,10 +31,14 @@
 <script>
 import getStatistics from '@/assets/js/getStatistics'
 import getCalendarStats from '@/assets/js/getCalendarStats'
+import infoBtn from './InfoBtn'
 const d3 = require('d3')
 
 export default {
   name: 'CalendarView',
+  components: {
+    infoBtn: infoBtn
+  },
   props: {
     width: Number,
     height: Number,
@@ -42,7 +49,15 @@ export default {
       formatDate: d3.timeFormat('%Y-%m-%d'),
       stDevFilter: 0,
       tableData: [],
-      transformedData: null
+      transformedData: null,
+      infoData: {
+        title: '',
+        content: `This is a calendar representing a summarized value for each day
+         when a measurement was taken. <br>
+         It shows a summarized value representing the maximum standard deviation
+          of a single chemical element for each day. The data in this widtget can be
+          filtered by station accordingly to the stations map.`
+      }
     }
   },
   mounted () {
