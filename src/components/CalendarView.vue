@@ -8,6 +8,9 @@
         <label for="range-1">Filter by st dev > {{ stDevFilter }}</label>
         <b-form-input id="range-1" v-model="stDevFilter" type="range" min="0" max="7"></b-form-input>
       </b-col>
+      <b-col ref='legendContainer'>
+        <span>Legend</span>
+      </b-col>
     </b-row>
       <b-row align-h="center">
         <b-col sm="12">
@@ -62,6 +65,7 @@ export default {
   },
   mounted () {
     this.fetchRedraw()
+    this.showLegend()
   },
   watch: {
     stDevFilter: function (newVal, oldVal) { // watch it
@@ -236,6 +240,40 @@ export default {
         this.tableData = tmp
         this.$refs.modalInfo.show()
       })
+    },
+    showLegend: function () {
+      const maxDev = 7
+      const color = d3
+        .scaleSequential(d3.interpolateBrBG)
+        .domain([-maxDev, maxDev])
+
+      const legendContainer = d3
+        .select(this.$refs.legendContainer)
+        .selectAll('div')
+        .data([0])
+        .join('div')
+        .style('position', 'relative')
+        .style('left', (2 * maxDev * 10) + 'px')
+        .style('width', (2 * maxDev * 10) + 'px')
+
+      legendContainer
+        .selectAll('div')
+        .data(d3.range(-maxDev, maxDev))
+        .join('div')
+        .style('display', 'inline-block')
+        .style('width', '10px')
+        .style('height', '10px')
+        .style('background-color', d => color(d))
+
+      legendContainer
+        .append('div')
+        .selectAll('p')
+        .data([-1, 0, 1])
+        .join('p')
+        .style('position', 'absolute')
+        .style('left', (d, i) => i * 50 + '%')
+        .style('display', 'inline-block')
+        .text(d => d * maxDev)
     }
   }
 }
