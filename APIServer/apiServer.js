@@ -61,7 +61,7 @@ api.get('/measures', (req, res) => {
 })
 
 /**
- * @api {get} / measuresGrouped?[stations=<Array>]&[minStdDev=<Number>]
+ * @api {get} /measuresGrouped?[stations=<Array>]&[minStdDev=<Number>] GetMeasuresGrouped
  * @apiDescription Request list of all data with a standardized value, grouped by day and filtered by a stations list and standardDeviation min value
  * @apiName GetCalendarData
  * @apiGroup Measure
@@ -112,7 +112,7 @@ api.get('/measuresGrouped', (req, res) => {
 })
 
 /**
- * @api {get} / measuresGrouped2
+ * @api {get} /measuresGrouped2 GetMeasuresGrouped2
  * @apiDescription Request list of measurement dates, grouped by location, year and weeknumber. For each row it returns, week per week the date extent of measures. This API is used only to summarize/reduce the measure list.
  * @apiName GetMeasureDateExtent
  * @apiGroup Measure
