@@ -137,7 +137,6 @@ export default {
         .attr('height', this.height * years.length)
         .style('font', '10px sans-serif')
         .style('width', '100%')
-        .style('height', 'auto')
 
       const year = svg
         .selectAll('g')
