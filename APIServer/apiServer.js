@@ -49,13 +49,19 @@ api.get('/measures', (req, res) => {
   order = order ? JSON.parse(order) : null
 
   let stations = req.query.stations
-
+  // select
   let query = `SELECT * FROM waterways_readings_std_val`
-  if (date) query += ` WHERE date = '${date}'`
+  // build where clause
+  let whereArr = []
+  if (date) whereArr.push(`date = '${date}'`)
   if (stations) {
     var quotedAndCommaSeparated = "'" + JSON.parse(stations).join("','") + "'"
-    query += ` AND location IN (${quotedAndCommaSeparated})`
+    whereArr.push(`location IN (${quotedAndCommaSeparated})`)
   }
+  if (whereArr.length > 0) {
+    query += ' WHERE ' + whereArr.join(' AND ')
+  }
+  // remaining parts of query
   if (orderBy) query += ` ORDER BY ${orderBy}`
   if (order) query += ` ${order}`
   if (limit) query += ` LIMIT ${limit}`
