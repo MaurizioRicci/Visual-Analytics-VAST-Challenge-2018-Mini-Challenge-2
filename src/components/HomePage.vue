@@ -33,8 +33,8 @@
     </div>
 
     <div class="row justify-content-center">
-      <div class="col-md-10">
-        <img src="~@/assets/inquinamento_acqua.jpg" fluid alt="Responsive image">
+      <div class="col-md-6">
+        <img src="~@/assets/inquinamento_acqua.jpg" class="img-fluid" alt="Responsive image">
       </div>
     </div>
 
