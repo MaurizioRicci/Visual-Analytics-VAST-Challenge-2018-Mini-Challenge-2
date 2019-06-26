@@ -50,7 +50,9 @@ api.get('/measures', (req, res) => {
 
   let stations = req.query.stations
   // select
-  let query = `SELECT * FROM waterways_readings_std_val`
+  let query = `SELECT *, round(avg_sample,2) as avg_sample_r,
+  round(standard_val,2) as standard_val_r
+   FROM waterways_readings_std_val`
   // build where clause
   let whereArr = []
   if (date) whereArr.push(`date = '${date}'`)

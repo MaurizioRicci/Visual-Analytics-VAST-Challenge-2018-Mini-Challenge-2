@@ -234,8 +234,8 @@ export default {
         tmp.fields.push({'key': 'measure', 'sortable': true})
         tmp.fields.push({'key': 'value', 'sortable': true})
         tmp.fields.push({'key': 'unit', 'sortable': true})
-        tmp.fields.push({'key': 'avg_sample', 'label': 'average value', 'sortable': false})
-        tmp.fields.push({'key': 'standard_val', 'label': 'Normalized value', 'sortable': true})
+        tmp.fields.push({'key': 'avg_sample_r', 'label': 'average value', 'sortable': false})
+        tmp.fields.push({'key': 'standard_val_r', 'label': 'Normalized value', 'sortable': true})
         tmp.date = d.date // contiene la data scelta
         this.tableData = tmp
         this.$refs.modalInfo.show()
