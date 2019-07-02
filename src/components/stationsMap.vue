@@ -20,7 +20,7 @@ export default {
       activeStations: new Set([
         'Waterways', 'Kannika',
         'Boonsri', 'Kohsoom',
-        'Busarakan', 'Somchair',
+        'Busarakhan', 'Somchair',
         'Achara', 'Tansanee',
         'Chai', 'Decha', 'Sakda'
       ]),
@@ -34,7 +34,7 @@ export default {
                 name: 'Chai',
                 children: [{ name: 'Boonsri' }, { name: 'Kohsoom' }]
               },
-              { name: 'Busarakan' }
+              { name: 'Busarakhan' }
             ]
           },
           {

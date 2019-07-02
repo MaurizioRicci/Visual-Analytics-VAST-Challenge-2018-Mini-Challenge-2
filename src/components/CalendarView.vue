@@ -5,7 +5,7 @@
         <infoBtn :content="infoData.content"/>
       </b-col>
       <b-col sm="2" offset-sm="3">
-        <label for="range-1">Filter by st dev > {{ stDevFilter }}</label>
+        <label for="range-1">Filter by st dev &ge; {{ stDevFilter }}</label>
         <b-form-input id="range-1" v-model="stDevFilter" type="range" min="0" max="7"></b-form-input>
       </b-col>
       <b-col ref='legendContainer'>
@@ -84,11 +84,13 @@ export default {
       })
     },
     fetchRedraw: function (minStdDev, stations) {
+      console.log(stations)
       getCalendarStats({
         'minStdDev': minStdDev,
         'stations': stations
       }).then(d => {
         this.transformedData = this.formatData(d)
+        console.log(this.transformedData.length)
         this.redraw()
       })
     },

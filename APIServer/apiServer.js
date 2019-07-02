@@ -112,7 +112,7 @@ api.get('/measuresGrouped', (req, res) => {
   ELSE min(standard_val)
   END as standard_val
   FROM waterways_readings_std_val
-  WHERE abs(standard_val) > ${minStdDev}`
+  WHERE abs(standard_val) >= ${minStdDev}`
   if (stations) {
     var quotedAndCommaSeparated = "'" + JSON.parse(stations).join("','") + "'"
     query += ` AND location IN (${quotedAndCommaSeparated})`
