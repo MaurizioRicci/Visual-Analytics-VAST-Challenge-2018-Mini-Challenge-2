@@ -32,7 +32,15 @@
 
     <div class="container-fluid">
       <p>Here are the top {{this.limit}} outliers found</p>
-      <b-table striped hover :items="bigOutliers.items" :fields="bigOutliers.fields"></b-table>
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="limit"
+        :per-page="perPage"
+        aria-controls="my-table"></b-pagination>
+      <b-table striped hover :items="bigOutliers.items"
+        :fields="bigOutliers.fields"
+        :per-page="perPage" small
+        :current-page="currentPage"></b-table>
     </div>
   </div>
 </template>
@@ -45,7 +53,9 @@ export default {
   data () {
     return {
       limit: 100,
-      bigOutliers: []
+      bigOutliers: [],
+      perPage: 20,
+      currentPage: 1
     }
   },
   mounted () {
@@ -63,15 +73,16 @@ export default {
         tmp.fields = []
         tmp.fields.push({ key: 'location', sortable: true })
         tmp.fields.push({ key: 'measure', sortable: true })
+        tmp.fields.push({ key: 'date', sortable: true })
         tmp.fields.push({ key: 'value', sortable: true })
         tmp.fields.push({ key: 'unit', sortable: true })
         tmp.fields.push({
-          key: 'avg_sample',
-          label: 'average value',
+          key: 'avg_sample_r',
+          label: 'Average value',
           sortable: false
         })
         tmp.fields.push({
-          key: 'standard_val',
+          key: 'standard_val_r',
           label: 'Normalized value',
           sortable: true
         })
