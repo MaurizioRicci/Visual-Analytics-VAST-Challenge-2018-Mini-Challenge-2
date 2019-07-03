@@ -32,15 +32,33 @@
 
     <div class="container-fluid">
       <p>Here are the top {{this.limit}} outliers found</p>
-      <b-pagination
-        v-model="currentPage"
-        :total-rows="limit"
-        :per-page="perPage"
-        aria-controls="my-table"></b-pagination>
+      <b-row>
+        <b-col md="6" class="my-1">
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="limit"
+            :per-page="perPage"
+            aria-controls="my-table"></b-pagination>
+        </b-col>
+
+        <b-col md="6" class="my-1">
+          <b-form-group label-cols-sm="3" label="Filter" class="mb-0">
+            <b-input-group>
+              <b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
+              <b-input-group-append>
+                <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+              </b-input-group-append>
+            </b-input-group>
+          </b-form-group>
+        </b-col>
+      </b-row>
+
       <b-table striped hover :items="bigOutliers.items"
         :fields="bigOutliers.fields"
         :per-page="perPage" small
-        :current-page="currentPage"></b-table>
+        :current-page="currentPage"
+        :filter="filter"
+        @filtered="onFiltered"></b-table>
     </div>
   </div>
 </template>
@@ -55,7 +73,8 @@ export default {
       limit: 100,
       bigOutliers: [],
       perPage: 20,
-      currentPage: 1
+      currentPage: 1,
+      filter: null
     }
   },
   mounted () {
@@ -88,6 +107,11 @@ export default {
         })
         this.bigOutliers = tmp
       })
+    },
+    onFiltered: function (filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.limit = filteredItems.length
+      this.currentPage = 1
     }
   },
   watch: {},
