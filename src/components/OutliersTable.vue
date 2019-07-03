@@ -31,12 +31,16 @@
     </div>
 
     <div class="container-fluid">
-      <p>Here are the top {{this.limit}} outliers found</p>
+      <p v-if="!filter">Here are the top {{this.limit}} outliers found
+      </p>
+      <p v-if="filter">From the top {{this.limit}} outliers, {{this.filterLength}}
+         match your query
+      </p>
       <b-row>
         <b-col md="6" class="my-1">
           <b-pagination
             v-model="currentPage"
-            :total-rows="limit"
+            :total-rows="filterLength"
             :per-page="perPage"
             aria-controls="my-table"></b-pagination>
         </b-col>
@@ -70,14 +74,16 @@ export default {
   name: 'SecondPage',
   data () {
     return {
-      limit: 100,
+      limit: 200,
       bigOutliers: [],
       perPage: 20,
       currentPage: 1,
-      filter: null
+      filter: null,
+      filterLength: null
     }
   },
   mounted () {
+    this.filterLength = this.limit
     this.showInfo()
   },
   methods: {
@@ -110,7 +116,7 @@ export default {
     },
     onFiltered: function (filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
-      this.limit = filteredItems.length
+      this.filterLength = filteredItems.length
       this.currentPage = 1
     }
   },
