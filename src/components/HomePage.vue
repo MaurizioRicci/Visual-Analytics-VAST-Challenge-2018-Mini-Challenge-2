@@ -8,18 +8,6 @@
         <li>
           <a class="nav-link" href="/">Home</a>
         </li>
-
-        <b-nav-item-dropdown
-          id="my-nav-dropdown"
-          text="Grafici"
-          toggle-class="nav-link-custom"
-          right
-        >
-          <b-dropdown-item href>Calendario misurazioni</b-dropdown-item>
-          <b-dropdown-item href>Separated link</b-dropdown-item>
-          <b-dropdown-item href>Sunburst chart</b-dropdown-item>
-          <b-dropdown-item href>Horizon chart</b-dropdown-item>
-        </b-nav-item-dropdown>
         <li>
           <a class="nav-link" href="#/outliers_table">Outliers table</a>
         </li>
