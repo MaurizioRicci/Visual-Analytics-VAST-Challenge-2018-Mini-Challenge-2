@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HomePage from '@/components/HomePage'
-import OutliersTable from '@/components/OutliersTable'
+import OutliersPage1 from '@/components/OutliersPage1'
 
 Vue.use(Router)
 
@@ -14,8 +14,8 @@ export default new Router({
     },
     {
       path: '/outliers_table',
-      name: 'second_page',
-      component: OutliersTable
+      name: 'outliers_table',
+      component: OutliersPage1
     }
   ]
 })

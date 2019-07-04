@@ -1,26 +1,5 @@
 <template>
-  <div class="container">
-    <div class="header">
-      <h1>Inquinamento idrico nella riserva di Boonsong Lekagul</h1>
-
-      <ul class="nav nav-tabs">
-        <li class="nav-item"></li>
-        <li>
-          <a class="nav-link" href="/">Home</a>
-        </li>
-        <li>
-          <a class="nav-link" href="#/outliers_table">Outliers table</a>
-        </li>
-        <li>
-          <a class="nav-link" href="#">Calendario dei rilevamenti</a>
-        </li>
-        <li>
-          <a class="nav-link" href="#">Conclusioni</a>
-        </li>
-      </ul>
-    </div>
-
-    <div class="container-fluid">
+    <div class="container">
       <p v-if="!filter">Here are the top {{this.limit}} outliers found
       </p>
       <p v-if="filter">From the top {{this.limit}} outliers, {{this.filterLength}}
@@ -54,14 +33,13 @@
         :filter="filter"
         @filtered="onFiltered"></b-table>
     </div>
-  </div>
 </template>
 
 <script>
 import getStatistics from '@/assets/js/getStatistics'
 
 export default {
-  name: 'SecondPage',
+  name: 'OutliersTable',
   data () {
     return {
       limit: 200,
