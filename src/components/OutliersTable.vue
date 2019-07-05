@@ -31,7 +31,7 @@
         :per-page="perPage" small
         :current-page="currentPage"
         :filter="filter"
-        @filtered="onFiltered"></b-table>
+        @filtered="onFiltered" fixed></b-table>
     </div>
 </template>
 

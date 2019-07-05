@@ -22,6 +22,7 @@
     <b-row class="mt-1">
       <OutliersChart/>
     </b-row>
+    <hr/>
     <b-row>
       <OutliersTable/>
     </b-row>

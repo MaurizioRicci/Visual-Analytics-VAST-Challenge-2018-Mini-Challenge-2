@@ -22,7 +22,10 @@
         <b-container fluid>
           <b-row>
             <b-col>
-              <b-table striped hover :items="tableData.items" :fields="tableData.fields">
+              <b-table striped hover
+               :items="tableData.items"
+               :fields="tableData.fields"
+               fixed>
               </b-table>
             </b-col>
           </b-row>
