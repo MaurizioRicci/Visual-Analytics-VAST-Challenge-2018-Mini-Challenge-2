@@ -12,7 +12,7 @@
           <a class="nav-link" href="#/outliers_table">Outliers table</a>
         </li>
         <li>
-          <a class="nav-link" href="#">Calendario dei rilevamenti</a>
+          <a class="nav-link" href="#/dot_plot">Calendario dei rilevamenti</a>
         </li>
         <li>
           <a class="nav-link" href="#">Conclusioni</a>

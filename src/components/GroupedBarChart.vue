@@ -22,13 +22,7 @@ export default {
       data: null,
       group: true,
       groupKey: 'year',
-      keys: [
-        'Waterways', 'Kannika',
-        'Boonsri', 'Kohsoom',
-        'Busarakhan', 'Somchair',
-        'Achara', 'Tansanee',
-        'Chai', 'Decha', 'Sakda'
-      ],
+      keys: null,
       margin: { top: 10, right: 10, bottom: 20, left: 40 },
       width: 1000,
       height: 600
@@ -46,6 +40,7 @@ export default {
             'year': d.key,
             'cont': d.value
           }))
+        this.keys = data.map(d => d.location)
         this.keys2 = nest.map(el => el.year)
         this.data2 = Object.assign(nest, {y: 'Count'})
         this.redraw()

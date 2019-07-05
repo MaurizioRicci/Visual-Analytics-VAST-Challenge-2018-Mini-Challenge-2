@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HomePage from '@/components/HomePage'
 import OutliersPage1 from '@/components/OutliersPage1'
-import DotPlot from "../components/DotPlot";
+import DotPlot from '@/components/DotPlot'
 
 Vue.use(Router)
 
