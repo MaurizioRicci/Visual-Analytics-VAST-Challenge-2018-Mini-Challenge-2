@@ -55,8 +55,8 @@ export default {
           'Busarakhan', 'Somchair',
           'Achara', 'Tansanee',
           'Chai', 'Decha', 'Sakda'
-        ]
-        console.log(stations)
+        ].sort()
+
         const color = d3
           .scaleOrdinal(d3.schemeCategory10)
           .domain(stations)

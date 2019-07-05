@@ -40,7 +40,7 @@ export default {
             'year': d.key,
             'cont': d.value
           }))
-        this.keys = data.map(d => d.location)
+        this.keys = data.map(d => d.location).sort()
         this.keys2 = nest.map(el => el.year)
         this.data2 = Object.assign(nest, {y: 'Count'})
         this.redraw()
