@@ -20,6 +20,7 @@
       </ul>
     </div>
     <div class='container-fluid'>
+      <div class="tooltip"></div>
       <svg ref='svgLines' />
     </div>
   </div>
@@ -105,6 +106,21 @@ export default {
 
         let linesData = data.filter(d => d.fromDate.getTime() !== d.toDate.getTime())
         let pointsData = data.filter(d => d.fromDate.getTime() === d.toDate.getTime())
+        let formatTime = d3.timeFormat('%Y-%m-%d')
+        let tooltip = d3.select('.tooltip')
+        let showTooltip = function (d) {
+          tooltip.transition()
+            .duration(200)
+            .style('opacity', 1)
+          tooltip.html(formatTime(d.fromDate) + '<br/>' + d.location)
+            .style('left', (d3.event.pageX) + 'px')
+            .style('top', (d3.event.pageY - 35) + 'px')
+        }
+        let hideTooltip = function () {
+          tooltip.transition()
+            .duration(500)
+            .style('opacity', 0)
+        }
 
         linesC
           .selectAll('line')
@@ -115,8 +131,10 @@ export default {
           .attr('y1', d => y(d.location))
           .attr('y2', d => y(d.location))
           .attr('stroke', d => color(d.location))
-          .attr('stroke-width', '4')
+          .attr('stroke-width', '6')
           .attr('stroke-linecap', 'round')
+          .on('mouseover', d => showTooltip(d))
+          .on('mouseout', hideTooltip)
 
         pointsC
           .selectAll('circle')
@@ -124,8 +142,10 @@ export default {
           .join('circle')
           .attr('cx', d => x(d.fromDate))
           .attr('cy', d => y(d.location))
-          .attr('r', 2)
+          .attr('r', 3)
           .attr('fill', d => color(d.location))
+          .on('mouseover', d => showTooltip(d))
+          .on('mouseout', hideTooltip)
       })
     }
   },
@@ -136,4 +156,14 @@ export default {
 </script>
 
 <style scoped>
+.tooltip {
+  position: absolute;
+  text-align: center;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
 </style>
