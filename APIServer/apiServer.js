@@ -165,6 +165,46 @@ api.get('/measuresGrouped2', (req, res) => {
   })
 })
 
+/**
+ * @api {get} /outliersCount GetOutliersCount
+ * @apiDescription Request list of outliers count, grouped by station and year
+ * @apiName GetOutliersCount
+ * @apiGroup Measure
+ *
+ * @apiSuccess {Object[]} measure List of objects.
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     [
+ *       {
+ *        "location": Boonsri
+ *        "year": 1998,
+ *        "count": 5
+ *      },
+ *      {
+ *        "location": Boonsri
+ *        "minDate": 1999,
+ *        "maxDate": 2
+ *      }
+ *     ]
+ *
+ * @apiError None.
+ *
+ * @apiSampleRequest http://localhost:3000/outliersCount
+ *
+ *  @apiErrorExample {json} List error
+ *    HTTP/1.1 500 Internal Server Error
+ *
+ */
+api.get('/outliersCount', (req, res) => {
+  db.all(`select location, strftime('%Y',date) as year, count(*) as cont
+  from waterways_readings_std_val
+  where abs(standard_val) >= 4
+  group by location, strftime('%Y',date)
+  ORDER BY year, cont`, (err, rows) => {
+    if (err) console.log(err)
+    res.json(rows)
+  })
+})
 // start listening
 
 const port = 3000

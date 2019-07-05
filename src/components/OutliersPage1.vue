@@ -19,17 +19,24 @@
         </li>
       </ul>
     </div>
-    <OutliersTable/>
+    <b-row class="mt-1">
+      <OutliersChart/>
+    </b-row>
+    <b-row>
+      <OutliersTable/>
+    </b-row>
   </div>
 </template>
 
 <script>
 import OutliersTable from './OutliersTable'
+import OutliersChart from './GroupedBarChart'
 
 export default {
   name: 'OutliersPage1',
   components: {
-    OutliersTable
+    OutliersTable,
+    OutliersChart
   }
 }
 </script>
