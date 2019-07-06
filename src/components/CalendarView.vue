@@ -9,7 +9,7 @@
         <b-form-input id="range-1" v-model="stDevFilter" type="range" min="0" max="7"></b-form-input>
       </b-col>
       <b-col ref='legendContainer'>
-        <span>Legend</span>
+        <span>St Dev Legend</span>
       </b-col>
     </b-row>
       <b-row align-h="center">
