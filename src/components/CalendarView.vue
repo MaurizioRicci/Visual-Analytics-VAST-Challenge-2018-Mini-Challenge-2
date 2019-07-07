@@ -87,13 +87,11 @@ export default {
       })
     },
     fetchRedraw: function (minStdDev, stations) {
-      console.log(stations)
       getCalendarStats({
         'minStdDev': minStdDev,
         'stations': stations
       }).then(d => {
         this.transformedData = this.formatData(d)
-        console.log(this.transformedData.length)
         this.redraw()
       })
     },
