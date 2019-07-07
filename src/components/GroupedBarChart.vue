@@ -108,7 +108,7 @@ export default {
               .text('Count')
           )
           .call(g => g.selectAll('line')
-            .attr('x2',this.width - this.margin.left - this.margin.right))
+            .attr('x2', this.width - this.margin.left - this.margin.right))
 
       const legend = svg => {
         const g = svg
