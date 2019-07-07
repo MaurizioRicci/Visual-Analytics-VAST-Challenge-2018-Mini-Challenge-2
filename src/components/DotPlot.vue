@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>
-    <div class='container-fluid'>
+    <div class='container-fluid' ref="parent">
       <div class="tooltip"></div>
       <svg ref='svgLines' />
     </div>
@@ -69,10 +69,10 @@ export default {
   methods: {
     init: function () {
       getMeasureIntervals().then(data => {
-        var margin = { top: 20, right: 0, bottom: 30, left: 60 }
-        var width = 1000
+        var margin = { top: 20, right: 10, bottom: 30, left: 60 }
+        var width = this.$refs.parent.clientWidth
         var height = 500
-
+        
         const stations = [
           'Kannika', 'Boonsri', 'Kohsoom',
           'Busarakhan', 'Somchair',
