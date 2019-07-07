@@ -31,15 +31,16 @@
 
             </div>
           </div>
+          <div class="col">
+            <p>
+              L'indice utilizzato è la deviazione standard (dev std) poiché, essendo un indice di dispersione statistica, permette di dare una stima della variabilità di una popolazione di dati.
+              Tale indicazione statistica è stata calcolata partendo dalla suddivisione dei dati per stazione di rilevamento e per ciascun elemento chimico.
+              In genere i valori che superano le 7 dev std del campione sono equalmente distribuiti nel corso degli anni presi in analisi.
+              <br/>Questo dato si evince in particolare dal calendario dei rilevamenti e dai bar chart presenti nella tabella degli outlier: nel primo grafico si offre la possibilità di filtrare le rilevazioni a seconda della dev std, il secondo presenta la distribuzione degli outlier nel corso degli anni e a seconda delle stazioni. Il trend che emerge da queste visualizzazioni è che in alcuni anni precedenti al 2007 i valori inconfutabilmente anomali, ovvero quelli che superano 7 dev std, si presentano con una frequenza all’incirca mensile e, a volte, anche più spesso.
+            </p>
 
-          <p>
-            L'indice utilizzato è la deviazione standard (dev std) poiché, essendo un indice di dispersione statistica, permette di dare una stima della variabilità di una popolazione di dati.
-            Tale indicazione statistica è stata calcolata partendo dalla suddivisione dei dati per stazione di rilevamento e per ciascun elemento chimico.
-            In genere i valori che superano le 7 dev std del campione sono equalmente distribuiti nel corso degli anni presi in analisi.
-            <br/>Questo dato si evince in particolare dal calendario dei rilevamenti e dai bar chart presenti nella tabella degli outlier: nel primo grafico si offre la possibilità di filtrare le rilevazioni a seconda della dev std, il secondo presenta la distribuzione degli outlier nel corso degli anni e a seconda delle stazioni. Il trend che emerge da queste visualizzazioni è che in alcuni anni precedenti al 2007 i valori inconfutabilmente anomali, ovvero quelli che superano 7 dev std, si presentano con una frequenza all’incirca mensile e, a volte, anche più spesso.
-          </p>
-
-          <button style="padding: 1em"><a href="https://www.madesafe.org/science/hazard-list/">Un approfondimento sulle sostanze chimiche (in English)</a></button>
+            <button style="padding: 1em"><a href="https://www.madesafe.org/science/hazard-list/">Un approfondimento sulle sostanze chimiche (in English)</a></button>
+          </div>
         </div>
       </div>
     </div>
