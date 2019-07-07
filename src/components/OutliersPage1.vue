@@ -20,11 +20,15 @@
       </ul>
     </div>
     <b-row class="mt-1">
-      <OutliersChart/>
+      <b-col>
+        <OutliersChart/>
+      </b-col>
     </b-row>
     <hr/>
     <b-row>
-      <OutliersTable/>
+      <b-col>
+        <OutliersTable/>
+      </b-col>
     </b-row>
   </div>
 </template>

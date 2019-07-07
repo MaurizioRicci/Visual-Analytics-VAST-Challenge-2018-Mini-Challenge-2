@@ -196,9 +196,13 @@ api.get('/measuresGrouped2', (req, res) => {
  *
  */
 api.get('/outliersCount', (req, res) => {
+  let { minStdDev } = req.query
+  minStdDev = typeof minStdDev !== 'undefined'
+    ? Number(JSON.parse(minStdDev)) : Number.MIN_VALUE
+
   db.all(`select location, strftime('%Y',date) as year, count(*) as cont
   from waterways_readings_std_val
-  where abs(standard_val) >= 4
+  where abs(standard_val) >= ${minStdDev}
   group by location, strftime('%Y',date)
   ORDER BY year, cont`, (err, rows) => {
     if (err) console.log(err)

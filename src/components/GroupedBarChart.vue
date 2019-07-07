@@ -1,12 +1,18 @@
 <template>
   <div class='GroupedBarChart'>
-    <div>
-      <b-button variant="outline-primary" @click="toogleView">
-        Toggle view
-      </b-button>
-      <span v-if="group">Outliers per station</span>
-      <span v-if="!group">Outliers per year</span>
-    </div>
+    <b-row align-h="center">
+      <b-col sm="4">
+        <label for="range-1">Filter by st dev &ge; {{ minStDevFilter }}</label>
+        <b-form-input id="range-1" v-model="minStDevFilter" type="range" min="0" max="7"></b-form-input>
+      </b-col>
+      <b-col sm="4">
+        <b-button variant="outline-primary" @click="toogleView">
+          Toggle view
+        </b-button>
+        <span v-if="group">Outliers per station</span>
+        <span v-if="!group">Outliers per year</span>
+      </b-col>
+    </b-row>
     <svg ref='svgGroupedBarChart' />
   </div>
 </template>
@@ -19,34 +25,40 @@ export default {
   name: 'GroupedBarChart',
   data () {
     return {
+      minStDevFilter: 0,
       data: null,
       group: true,
       groupKey: 'year',
       keys: null,
-      margin: { top: 10, right: 10, bottom: 20, left: 40 },
-      width: 1000,
+      margin: { top: 20, right: 50, bottom: 20, left: 40 },
+      width: 900,
       height: 600
     }
   },
   mounted () {
-    getOutliersCountPerStation()
-      .then(data => {
-        this.data = Object.assign(data, {y: 'Count'})
-        let nest = d3.nest()
-          .key(d => d.year)
-          .rollup(d => d3.sum(d, el => el.cont))
-          .entries(this.data)
-          .map(d => ({
-            'year': d.key,
-            'cont': d.value
-          }))
-        this.keys = data.map(d => d.location).sort()
-        this.keys2 = nest.map(el => el.year)
-        this.data2 = Object.assign(nest, {y: 'Count'})
-        this.redraw()
-      })
+    this.fetchDataRedraw()
   },
   methods: {
+    fetchDataRedraw: function () {
+      getOutliersCountPerStation({
+        'minStdDev': this.minStDevFilter
+      })
+        .then(data => {
+          this.data = Object.assign(data, {y: 'Count'})
+          let nest = d3.nest()
+            .key(d => d.year)
+            .rollup(d => d3.sum(d, el => el.cont))
+            .entries(this.data)
+            .map(d => ({
+              'year': d.key,
+              'cont': d.value
+            }))
+          this.keys = data.map(d => d.location).sort()
+          this.keys2 = nest.map(el => el.year)
+          this.data2 = Object.assign(nest, {y: 'Count'})
+          this.redraw()
+        })
+    },
     redraw: function () {
       let currData = this.group ? this.data : this.data2
 
@@ -90,10 +102,13 @@ export default {
               .select('.tick:last-of-type text')
               .clone()
               .attr('x', 3)
+              .attr('dy', -this.margin.top / 2)
               .attr('text-anchor', 'start')
               .attr('font-weight', 'bold')
               .text('Count')
           )
+          .call(g => g.selectAll('line')
+            .attr('x2',this.width - this.margin.left - this.margin.right))
 
       const legend = svg => {
         const g = svg
@@ -160,6 +175,11 @@ export default {
     toogleView: function () {
       this.group = !this.group
       this.redraw()
+    }
+  },
+  watch: {
+    minStDevFilter: function () {
+      this.fetchDataRedraw()
     }
   }
 }
