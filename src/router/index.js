@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HomePage from '@/components/HomePage'
 import OutliersPage1 from '@/components/OutliersPage1'
 import DotPlot from '@/components/DotPlot'
+import Conclusioni from '@/components/Conclusioni'
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ export default new Router({
       path: '/dot_plot',
       name: 'dot_plot',
       component: DotPlot
+    },
+    {
+      path: '/conclusioni',
+      name: 'conclusioni',
+      component: Conclusioni
     }
   ]
 })

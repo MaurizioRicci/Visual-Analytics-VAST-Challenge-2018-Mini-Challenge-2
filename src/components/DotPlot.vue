@@ -15,9 +15,31 @@
           <a class='nav-link' href='#/dot_plot'>Calendario dei rilevamenti</a>
         </li>
         <li>
-          <a class='nav-link' href='#'>Conclusioni</a>
+          <a class='nav-link' href='#/conclusioni'>Conclusioni</a>
         </li>
       </ul>
+    </div>
+    <div class="section wb nopadtop">
+      <div class="container">
+
+        <div class="row">
+
+          <div class="col-md-12">
+
+            <div class="message-box">
+              <h2>Calendario dei rilevamenti</h2>
+
+            </div>
+          </div>
+
+          <p>
+            Il dipartimento di idrologia ci ha fornito le misurazioni svolte nel corso degli anni ma non tutte le stazioni presentano un sufficiente numero di dati. Il calendario dei rilevamenti presenta, mediante un dot plot, la collezione di rilevamenti e da esso si nota che la maggior parte delle stazioni ha una distribuzione piuttosto omogenea ad eccezione di: Tansanee, Decha e Achara che sono presenti da gennaio 2009. Con una finestra di circa dieci anni è difficile stabilire cosa possa essere successo prima di quest’anno nelle acque in prossimità delle stazioni sopra elencate. Ad ogni modo dal periodo in cui vengono effettuate le rilevazioni, esse risultano essere molto fitte, si hanno dati relativi a una data stazione anche più volte alla settimana.
+            C’è da notare che le acque in prossimità della stazione di Achara confluiscono in quelle della stazione Sakda; si potrebbe pensare quindi a una correlazione tra le acque monitorate da Achara e quelle di Sakda, ciò potrebbe rendere non strettamente necessaria la stazione di Achara.
+
+          </p>
+
+        </div>
+      </div>
     </div>
     <div class='container-fluid'>
       <div class="tooltip"></div>
@@ -166,4 +188,15 @@ export default {
   border-radius: 8px;
   pointer-events: none;
 }
+
+ .nav-tabs .nav-link{
+   border:1px solid gray;
+ }
+.nav-tabs .nav-item{
+  margin-left: 16em;
+}
+a.nav-link{
+  background-color: beige;
+}
+
 </style>
