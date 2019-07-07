@@ -1,5 +1,5 @@
 <template>
-  <div class='GroupedBarChart'>
+  <div class='GroupedBarChart' ref='parent'>
     <b-row align-h="center">
       <b-col sm="4">
         <label for="range-1">Filter by st dev &ge; {{ minStDevFilter }}</label>
@@ -36,6 +36,7 @@ export default {
     }
   },
   mounted () {
+    this.width = this.$refs.parent.clientWidth
     this.fetchDataRedraw()
   },
   methods: {

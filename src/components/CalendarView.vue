@@ -1,5 +1,5 @@
 <template>
-  <div class='CalendarView'>
+  <div class='CalendarView' ref="parent">
     <b-row>
       <b-col sm="2">
         <infoBtn :content="infoData.content"/>
@@ -46,12 +46,12 @@ export default {
     infoBtn: infoBtn
   },
   props: {
-    width: Number,
-    height: Number,
     stations: Array
   },
   data () {
     return {
+      width: null,
+      height: 150,
       formatDate: d3.timeFormat('%Y-%m-%d'),
       stDevFilter: 0,
       tableData: [],
@@ -67,6 +67,7 @@ export default {
     }
   },
   mounted () {
+    this.width = this.$refs.parent.clientWidth
     this.fetchRedraw()
     this.showLegend()
   },

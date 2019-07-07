@@ -48,7 +48,7 @@
     </div>
 
     <div class="container-fluid">
-      <calendarView :width="300" :height="150" :stations="activeStations"/>
+      <calendarView :stations="activeStations"/>
     </div>
   </div>
 </template>
