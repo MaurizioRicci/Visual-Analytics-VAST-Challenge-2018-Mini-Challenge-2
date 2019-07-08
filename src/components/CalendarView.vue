@@ -103,7 +103,6 @@ export default {
       const format = d3.format('.2')
       const formatDay = d =>
         ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][d.getUTCDay()]
-      const formatDate = d3.utcFormat('%x')
       const formatMonth = d3.utcFormat('%b')
       const timeWeek = weekday === 'sunday' ? d3.utcSunday : d3.utcMonday
       const countDay = d =>
@@ -195,7 +194,7 @@ export default {
         .on('mouseover', function () { d3.select(this).classed('active', true) })
         .on('mouseout', function () { d3.select(this).classed('active', false) })
         .append('title')
-        .text(d => `${formatDate(d.date)}: ${format(d.standard_val)} devSt`)
+        .text(d => `${this.formatDate(d.date)}: ${format(d.standard_val)} devSt`)
 
       const month = year
         .append('g')
