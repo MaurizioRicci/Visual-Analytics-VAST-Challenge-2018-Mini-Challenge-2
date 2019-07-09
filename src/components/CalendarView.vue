@@ -175,21 +175,35 @@ export default {
         .attr('dy', '0.31em')
         .text(formatDay)
 
+      const t = d3.transition()
+        .duration(500)
+
       year
-        .append('g')
+        // .append('g')
         .selectAll('rect')
-        .data(d => d.values)
-        .join('rect')
-        .attr('width', cellSize - 1)
-        .attr('height', cellSize - 1)
-        .attr(
-          'x',
-          d => timeWeek.count(d3.utcYear(d.date), d.date) * cellSize + 0.5
+        .data(d => d.values, d => d.date.getTime())
+        .join(
+          enter => enter.append('rect')
+            .attr('width', cellSize - 1)
+            .attr('height', cellSize - 1)
+            .attr('x',
+              d => timeWeek.count(d3.utcYear(d.date), d.date) * cellSize + 0.5
+            )
+            .attr('y', d => countDay(d.date) * cellSize + 0.5)
+            .style('stroke-width', '0')
+            .style('stroke', d => (d.standard_val > maxDev ? 'violet' : 'black'))
+            .style('fill', d => color(d.standard_val))
+            .style('opacity', 0)
+            .call(selection => selection.transition(t)
+              .style('opacity', 1)
+              .style('stroke-width', '2')
+            ),
+          update => update,
+          exit => exit.transition(t)
+            .style('stroke-width', '0')
+            .style('opacity', 0)
+            .remove()
         )
-        .attr('y', d => countDay(d.date) * cellSize + 0.5)
-        .attr('fill', d => color(d.standard_val))
-        .attr('stroke', d => (d.standard_val > maxDev ? 'violet' : 'black'))
-        .attr('stroke-width', '2')
         .on('click', d => this.showInfo(d))
         .on('mouseover', function () { d3.select(this).classed('active', true) })
         .on('mouseout', function () { d3.select(this).classed('active', false) })
