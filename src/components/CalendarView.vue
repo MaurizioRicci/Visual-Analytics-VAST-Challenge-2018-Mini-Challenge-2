@@ -191,7 +191,7 @@ export default {
             )
             .attr('y', d => countDay(d.date) * cellSize + 0.5)
             .style('stroke-width', '0')
-            .style('stroke', d => (d.standard_val > maxDev ? 'violet' : 'black'))
+            .attr('class', d => d.standard_val > maxDev ? 'violetStroke' : 'blackStroke', true)
             .style('fill', d => color(d.standard_val))
             .style('opacity', 0)
             .call(selection => selection.transition(t)
@@ -205,8 +205,8 @@ export default {
             .remove()
         )
         .on('click', d => this.showInfo(d))
-        .on('mouseover', function () { d3.select(this).classed('active', true) })
-        .on('mouseout', function () { d3.select(this).classed('active', false) })
+        .on('mouseover', function () { d3.select(this).classed('activeStroke', true) })
+        .on('mouseout', function () { d3.select(this).classed('activeStroke', false) })
         .append('title')
         .text(d => `${this.formatDate(d.date)}: ${format(d.standard_val)} devSt`)
 
@@ -297,7 +297,15 @@ export default {
 </script>
 
 <style scoped>
-svg >>> .active {
+svg >>> .blackStroke {
+  stroke: black
+}
+
+svg >>> .violetStroke {
+  stroke: violet
+}
+
+svg >>> .activeStroke {
   stroke: rgb(0, 126, 230)
 }
 </style>
