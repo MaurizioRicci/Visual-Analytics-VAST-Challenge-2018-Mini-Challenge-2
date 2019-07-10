@@ -69,20 +69,21 @@ export default {
   methods: {
     init: function () {
       getMeasureIntervals().then(data => {
-        var margin = { top: 20, right: 10, bottom: 30, left: 60 }
+        var margin = { top: 20, right: 10, bottom: 30, left: 70 }
         var width = this.$refs.parent.clientWidth
         var height = 500
-        
-        const stations = [
-          'Kannika', 'Boonsri', 'Kohsoom',
-          'Busarakhan', 'Somchair',
-          'Achara', 'Tansanee',
-          'Chai', 'Decha', 'Sakda'
-        ].sort()
+
+        // stations name array sorted by first measure date
+        const stations = d3.nest()
+          .key(d => d.location)
+          .entries(data)
+          .sort((a, b) => d3.descending(a.values[0].fromDate, b.values[0].fromDate))
+          .map(el => el.key)
 
         const color = d3
           .scaleOrdinal(d3.schemeCategory10)
-          .domain(stations)
+          // clone array and sort for consistent stations color across project
+          .domain(stations.slice(0).sort())
 
         const svg = d3
           .select(this.$refs.svgLines)
@@ -109,7 +110,7 @@ export default {
         // Y axis
         const y = d3
           .scalePoint()
-          .rangeRound([height - margin.bottom, margin.top])
+          .rangeRound([height - margin.bottom - 10, margin.top])
           .domain(stations)
 
         svg.append('g')
@@ -117,7 +118,7 @@ export default {
           .style('font-size', '11px')
           .call(
             d3.axisLeft(y)
-            //  .tickSizeOuter(0)
+              .tickSizeOuter(0)
           )
 
         const linesC = svg.append('g')
