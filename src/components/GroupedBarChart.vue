@@ -13,6 +13,7 @@
         <span v-if="!group">Outliers per year</span>
       </b-col>
     </b-row>
+    <div class="tooltip"></div>
     <svg ref='svgGroupedBarChart' />
   </div>
 </template>
@@ -152,9 +153,12 @@ export default {
         'value': el.cont
       }))
 
+      let tooltip = d3.select('.tooltip')
       g.selectAll('rect')
         .data(currData)
         .join('rect')
+        .on('mouseover', d => this.showTooltip(tooltip, d))
+        .on('mouseout', this.hideTooltip(tooltip))
         .transition()
         .duration(200)
         .attr('transform', d => this.group ? `translate(${x0(d[this.groupKey])},0)` : null)
@@ -176,6 +180,20 @@ export default {
     toogleView: function () {
       this.group = !this.group
       this.redraw()
+    },
+    showTooltip: function (tooltip, d) {
+      console.log(d3.event)
+      tooltip.transition()
+        .duration(200)
+        .style('opacity', 1)
+      tooltip.html(d.value)
+        .style('left', (d3.event.layerX) + 'px')
+        .style('top', (d3.event.layerY - 15) + 'px')
+    },
+    hideTooltip: function (tooltip) {
+      tooltip.transition()
+        .duration(500)
+        .style('opacity', 0)
     }
   },
   watch: {
@@ -185,3 +203,16 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.tooltip {
+  position: absolute;
+  text-align: center;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+</style>
