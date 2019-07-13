@@ -177,7 +177,7 @@ export default {
     makeToast (txt, append = false) {
       this.$bvToast.toast(`${txt}`, {
         title: 'Stations map',
-        autoHideDelay: 5000,
+        autoHideDelay: 1500,
         appendToast: append
       })
     }
