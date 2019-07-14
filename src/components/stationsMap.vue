@@ -168,7 +168,7 @@ export default {
         .attr('points', '-10,-5 0,0 10,-5 0,5')
         .style('pointer-events', 'none')
         .style('fill', d => this.isStationActive(d.data.name)
-          ? 'lime' : 'none')
+          ? 'forestgreen' : 'none')
 
       // adds the text to the node
       node
