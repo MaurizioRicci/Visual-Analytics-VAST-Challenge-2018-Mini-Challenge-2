@@ -87,7 +87,7 @@ export default {
       // set the dimensions and margins of the diagram
       var margin = { top: 20, right: 0, bottom: 30, left: 0 }
       var width = 380 - margin.left - margin.right
-      var height = 300 - margin.top - margin.bottom
+      var height = 400 - margin.top - margin.bottom
 
       // declares a tree layout and assigns the size
       var treemap = d3.tree().size([width, height])
@@ -162,7 +162,13 @@ export default {
         .on('click', d => this.toggleStation(d.data.name))
 
       // adds the circle to the node
-      node.append('circle').attr('r', 10)
+      node.append('circle').attr('r', 12)
+      node.append('polygon')
+        .attr('id', d => d.name + '-checkbox')
+        .attr('points', '-10,-5 0,0 10,-5 0,5')
+        .style('pointer-events', 'none')
+        .style('fill', d => this.isStationActive(d.data.name)
+          ? 'lime' : 'none')
 
       // adds the text to the node
       node
