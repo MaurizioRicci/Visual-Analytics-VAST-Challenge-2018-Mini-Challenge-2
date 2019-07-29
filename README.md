@@ -1,4 +1,4 @@
-# my-project
+# Vast challenge 2018 mini challenge 2 (vast 2018 mc2)
 
 > A Vue.js project
 
