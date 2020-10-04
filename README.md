@@ -1,8 +1,12 @@
 # Vast challenge 2018 mini challenge 2 (vast 2018 mc2)
 
-> A Vue.js project
+> Un progetto in Vue.js per Visual Analytics 2019.
 
-## Build Setup
+# Relazione finale del progetto
+
+> Disponibile nella root di questo repository, link: https://github.com/MaurizioRicci/vc2018mc2/blob/master/Relazione%20Finale%20VA.pdf
+
+## Istruzioni per eseguire il progetto
 
 ``` bash
 # install dependencies
